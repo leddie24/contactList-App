@@ -6,7 +6,7 @@ myApp.directive('autoComplete',['$http',function($http){
         },
         templateUrl:'/views/autocomplete-template.html',
         link:function(scope,elem,attrs){
-
+            console.log(scope);
             scope.suggestions=[];
 
             scope.selectedTags=[];
@@ -32,9 +32,10 @@ myApp.directive('autoComplete',['$http',function($http){
                 });
             }
 
-            scope.setSearchValue=function(searchResult){
-                if(scope.selectedTags.indexOf(searchResult)===-1){
-                    scope.searchContact = searchResult;
+            scope.setSearchValue=function(suggestion){
+                if(scope.selectedTags.indexOf(suggestion)===-1){
+                    scope.$parent.searchContact = suggestion;
+                    scope.searchContact = suggestion;
                     scope.suggestions=[];
                     listusers = [];
                 }
