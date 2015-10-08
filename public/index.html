@@ -1,0 +1,146 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+	<title>Contact List App</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+	<div class="container-fluid" ng-controller="AppCtrl">
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="#">Brand</a>
+		    </div>
+
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav">
+		        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="#">Action</a></li>
+		            <li><a href="#">Another action</a></li>
+		            <li><a href="#">Something else here</a></li>
+		            <li role="separator" class="divider"></li>
+		            <li><a href="#">Separated link</a></li>
+		            <li role="separator" class="divider"></li>
+		            <li><a href="#">One more separated link</a></li>
+		          </ul>
+		        </li>
+		      </ul>
+		      <div class="navbar-form navbar-left" role="search">
+		        <div class="form-group">
+		          <input type="text" class="form-control" placeholder="Search contacts" >
+		        </div>
+		        <div class="form-group">
+					<div auto-complete url="/search" model="data.tags"></div>
+		        </div>
+		        <button type="submit" class="btn btn-default">Submit</button>
+		      </div>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="#">Link</a></li>
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="#">Action</a></li>
+		            <li><a href="#">Another action</a></li>
+		            <li><a href="#">Something else here</a></li>
+		            <li role="separator" class="divider"></li>
+		            <li><a href="#">Separated link</a></li>
+		          </ul>
+		        </li>
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+
+
+
+	    <div id="sidebar-wrapper" class="col-sm-2">
+	        <ul class="sidebar-nav shadow">
+	            <li><a href="#" ng-click="sortGroup('all')">All Contacts</a></li>
+	            <li ng-repeat="item in groups"><a href="#" ng-click="sortGroup(item)">{{ item }}</a></li>
+	        </ul>
+	    </div>
+
+
+	    <div class="box shadow container-fluid col-sm-9 col-sm-offset-3">
+			
+			<table class="table">
+				<thead>
+					<tr>
+						<th ng-click="sortType = 'favorite'; sortReverse = !sortReverse">Favorite</th>
+						<th ng-click="sortType = 'group'; sortReverse = !sortReverse">Group</th>
+						<th ng-click="sortType = 'name'; sortReverse = !sortReverse">Name</th>
+						<th ng-click="sortType = 'email'; sortReverse = !sortReverse">Email</th>
+						<th>Number</th>
+						<th>Action</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<div ng-class="favorite ? 'rating fave' : 'rating'">
+								<span class="star" ng-click="toggleFavorite(contact.id)">☆</span>
+								<input type="hidden" value="{{ favorite }}" />
+							</div>
+						</td>
+						<td><select ng-model="contact.group" class="form-control">
+	        					<option value="">Select Group</option>
+	        					<option ng-repeat="item in groups" value="{{item}}">{{ item }}</option>
+	        				</select>
+	        			</td>
+						<td><input class="form-control" placeholder="Name" ng-model="contact.name"></td>
+						<td><input class="form-control" placeholder="E-mail" ng-model="contact.email"></td>
+						<td><input class="form-control" placeholder="Phone" ng-model="contact.number"></td>
+						<td>
+							<button class="btn btn-primary" ng-click="addContact()">New Contact</button>
+						</td>
+						<td>
+							<button class="btn btn-info" ng-click="update()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button>
+						</td>
+					</tr>
+					<tr ng-repeat="contact in contactlist | orderBy:sortType:sortReverse | filter:searchContact">
+						<td>
+							<div ng-class="contact.favorite ? 'rating fave' : 'rating'">
+							<span class="star">☆</span>
+						</div>
+						</td>
+						<td>{{ contact.group }}</td>
+						<td>{{ contact.name }}</td>
+						<td>{{ contact.email }}</td>
+						<td>{{ contact.number}}</td>
+						<td>
+							<button class="btn btn-danger" ng-click="remove(contact._id)">Delete</button>
+						</td>
+						<td>
+							<button class="btn btn-warning" ng-click="edit(contact._id)">Edit</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+<script src="controllers/controller.js"></script>
+<script src="directives/directive.js"></script>
+</body>
+</html>

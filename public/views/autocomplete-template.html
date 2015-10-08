@@ -1,0 +1,16 @@
+<div class="tags-wrapper">
+    <div id="tagsList" class="tags-cloud">
+        <input type="text" placeholder="Search contacts" id="searchInput" ng-keydown="checkKeyDown($event)" class="form-control" ng-model="searchContact" ng-change="search()"/>
+    </div>
+    <table id="suggestions" class="shadow suggestions-list" ng-show="suggestions.length > 0">
+        <tbody>
+            <tr ng-repeat="suggestion in suggestions track by $index" class="blockSpan" ng-click="setSearchValue(suggestion)" ng-class="{active : selectedIndex===$index}">
+                <td>   
+                    <div>
+                        <strong>{{ suggestion }}</strong>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+     </table>
+</div>

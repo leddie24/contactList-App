@@ -1,0 +1,100 @@
+body {
+	background: #eee;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: ltr;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+  font-size: 30px;
+  line-height: 	40px;
+}
+.rating > span:hover {
+	cursor: pointer;
+}
+.rating.fave > .star:before,
+.rating.fave > .star ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
+
+
+.shadow {
+	-webkit-box-shadow: 3px 3px 10px 3px rgba(130,130,130,0.56);
+	-moz-box-shadow: 3px 3px 10px 3px rgba(130,130,130,0.56);
+	box-shadow: 3px 3px 10px 3px rgba(130,130,130,0.56);
+}
+
+#sidebar-wrapper {
+	margin-left: -250px;
+	left: 250px;
+	position: fixed;
+	height: 100%;
+	/* overflow-y: auto; */
+	z-index: 1000;
+	transition: all 0.4s ease 0s;
+	padding: 0;
+	margin-left: -235px;
+	margin-right: 0px;
+}
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 15px;
+  background: #fff;
+
+}
+
+.navbar-default {
+	z-index: 3;
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  background: #fff;
+  margin-bottom: 50px;
+}
+
+.box.container-fluid {
+	padding-top: 40px;
+}
+
+.tags-wrapper {
+	position: relative;
+}
+
+#suggestions {
+	position: absolute;
+	top: 35px;
+	left: 0px;
+	border: 1px solid #eee;
+	border-radius: 2px;
+	background: #fff;
+	padding-left: 
+}
+
+#suggestions div {
+	margin: 14px;
+}
+
+#tagsList input {
+	width: 300px;
+}
